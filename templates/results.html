@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Results - PotholeTrack{% endblock %}
+{% block content %}
+<div class="p-4 bg-white rounded shadow-sm mb-4">
+  <h1 class="h4 mb-3">Detection Results</h1>
+
+  <h2 class="h5 mt-3">Annotated Video</h2>
+  <video controls class="w-100 mb-3">
+    <source src="{{ url_for('serve_output', filename=video_filename) }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <h2 class="h5 mt-3">Map</h2>
+  <iframe src="{{ url_for('serve_output', filename=map_filename) }}" width="100%" height="450" style="border:0;"></iframe>
+
+  <div class="mt-3">
+    <a class="btn btn-outline-secondary" href="{{ url_for('serve_output', filename=csv_filename) }}">Download CSV</a>
+  </div>
+</div>
+
+<div class="p-4 bg-white rounded shadow-sm">
+  <h2 class="h5 mb-3">Detection Table</h2>
+  <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+    <table class="table table-sm table-striped">
+      <thead>
+        <tr>
+          <th>Frame</th>
+          <th>Conf</th>
+          <th>Area(px)</th>
+          <th>Risk</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in records %}
+        <tr>
+          <td>{{ r.frame_id }}</td>
+          <td>{{ '%.2f'|format(r.confidence) }}</td>
+          <td>{{ '%.0f'|format(r.area_px) }}</td>
+          <td>{{ r.risk_level }}</td>
+          <td>{{ '%.6f'|format(r.latitude) }}</td>
+          <td>{{ '%.6f'|format(r.longitude) }}</td>
+          <td>{{ r.detection_time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+

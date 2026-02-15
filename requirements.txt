@@ -1,0 +1,15 @@
+ultralytics
+opencv-python
+numpy
+pandas
+streamlit
+folium
+streamlit-folium
+pytz
+gpxpy
+pyyaml
+fastapi
+uvicorn
+streamlit-webrtc
+flask
+
